@@ -34,17 +34,17 @@ ARG IMAGICK_BUILD_REQUIREMENTS_EXTRA=""
 ARG IMAGICK_EXTRA_CONFIGURE_ARGS=""
 
 ARG MOZJPEG_EXTRA_CONFIGURE_ARGS=""
-ARG MOZJPEG_VERSION="6d95c51adf0c314017f541b6cb07e13cc1bce754"
+ARG MOZJPEG_VERSION="4.0.0"
 
 ARG TIFF_EXTRA_CONFIGURE_ARGS=""
-ARG TIFF_VERSION="4.1.0"
+ARG TIFF_VERSION="4.2.0"
 
 ARG WEBP_VERSION="1.1.0"
 ARG WEBP_EXTRA_CONFIGURE_ARGS=""
 
-ARG OPENJPEG_VERSION="19ef7f26c43f689b627aad642da7f6150893b863"
+ARG OPENJPEG_VERSION="2.3.1"
 
-ARG IMAGICK_VERSION="7.0.10-14"
+ARG IMAGICK_VERSION="7.0.10-53"
 ARG IMAGICK_EXTRA_CONFIGURE_ARGS=""
 
 ## configure imagick and the dependencies
@@ -56,7 +56,7 @@ RUN set -xe; \
     ################################################
     mkdir -p /tmp/mozjpeg; \
     cd /tmp/mozjpeg; \
-    docker-package-download -o mozjpeg.tar.gz -s https://codeload.github.com/mozilla/mozjpeg/tar.gz/${MOZJPEG_VERSION}; \
+    docker-package-download -o mozjpeg.tar.gz -s https://codeload.github.com/mozilla/mozjpeg/tar.gz/v${MOZJPEG_VERSION}; \
     tar --strip 1 -xzf mozjpeg.tar.gz; \
     cmake -G"Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=/usr/lib -DWITH_JPEG8=true; \
     make install prefix=/usr libdir=/usr/lib64 ; \
@@ -91,7 +91,7 @@ RUN set -xe; \
     ################################################
     mkdir -p /tmp/openjpeg; \
     cd /tmp/openjpeg; \
-    docker-package-download -o openjpeg.tar.gz -s https://codeload.github.com/uclouvain/openjpeg/tar.gz/${OPENJPEG_VERSION}; \
+    docker-package-download -o openjpeg.tar.gz -s https://codeload.github.com/uclouvain/openjpeg/tar.gz/v${OPENJPEG_VERSION}; \
     tar --strip 1 -xzf openjpeg.tar.gz; \
     mkdir build; \
     cd build; \
