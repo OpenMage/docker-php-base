@@ -57,7 +57,7 @@ RUN set -xe; \
     ################################################
     mkdir -p /tmp/mozjpeg; \
     cd /tmp/mozjpeg; \
-    docker-package-download -o mozjpeg.tar.gz -s https://github.com/mozilla/mozjpeg/archive/v${MOZJPEG_VERSION}; \
+    docker-package-download -o mozjpeg.tar.gz -s https://codeload.github.com/mozilla/mozjpeg/tar.gz/v${MOZJPEG_VERSION}; \
     tar --strip 1 -xzf mozjpeg.tar.gz; \
     cmake -G"Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=/usr/lib -DWITH_JPEG8=true; \
     make install prefix=/usr libdir=/usr/lib64 ; \
