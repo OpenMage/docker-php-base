@@ -34,3 +34,9 @@ All notable changes to this project will be documented in this section.
 ### 2020-02-18
 
 - added workflow to trigger dockerhub autobuild
+
+### 2020-12-27
+- updated MozJPEG to 4.0.0
+- updated Tiff to 4.2.0
+- updated OpenJPEG to 2.3.1
+- updated ImageMagick to 7.0.10-53
