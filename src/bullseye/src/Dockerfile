@@ -1,4 +1,4 @@
-FROM openmage/debian:stretch-latest
+FROM openmage/debian:bullseye-latest
 
 COPY root /
 
