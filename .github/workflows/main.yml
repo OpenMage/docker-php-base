@@ -9,10 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: [ 'buster', 'stretch', 'bullseye' ]
+        version: [ 'buster', 'bullseye' ]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
@@ -23,6 +28,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
+          platforms: linux/amd64,linux/arm64
           tags: openmage/php-base:${{ matrix.version }}-latest
           context: ./src/${{ matrix.version }}/src
           file: ./src/${{ matrix.version }}/src/Dockerfile
