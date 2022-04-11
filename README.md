@@ -8,8 +8,8 @@ This image is automatically build with following cron expression `0 0 * * *`.
 
 ### Environment vars
 
-| Argument                              | Default Value                                             | Description |
-| :---                                  | :---                                                      | :---         |
+| Argument | Default Value | Description |
+|:---------|:--------------|:------------|
 
 ## Contributing
 
