@@ -1,15 +1,16 @@
 name: "Build on main"
 on:
+  workflow_dispatch:
   push:
     branches: [ main ]
-  workflow_dispatch:
+
 jobs:
   scheduler:
     name: Build Trigger
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: [ 'buster', 'bullseye' ]
+        version: [ 'buster', 'bullseye', 'bookworm' ]
     steps:
       - name: Checkout
         uses: actions/checkout@v2

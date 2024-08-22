@@ -2,7 +2,7 @@ name: "Build Scheduler"
 on:
   workflow_dispatch:
   schedule:
-  - cron:  '35 1 * * 0'
+  - cron:  '30 3 * * 1'
 
 jobs:
   scheduler:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: [ 'buster', 'bullseye' ]
+        version: [ 'buster', 'bullseye', 'bookworm' ]
     steps:
       - name: Checkout
         uses: actions/checkout@v2

@@ -1,11 +1,10 @@
-FROM openmage/debian:buster-latest
+FROM openmage/debian:bookworm-latest
 
 COPY root /
 
 ## configure default environment stuff and file permissions
 RUN set -xe; \
-    chmod 755 /usr/local/bin/{docker-php-source-prepare,docker-entrypoint,docker-fpm-healthcheck,docker-php-ext-configure,docker-php-ext-enable,docker-php-ext-disable,docker-php-ext-install,docker-php-pecl-install,docker-php-source,phpgosu}; \
-    rm -rf /etc/apt/preferences.d/debian_main_cmake; \
+    chmod 755 /usr/local/bin/{docker-php-source-prepare,docker-entrypoint,docker-fpm-healthcheck,docker-php-ext-configure,docker-php-ext-enable,docker-php-ext-disable,docker-php-ext-disable,docker-php-ext-install,docker-php-pecl-install,docker-php-source,phpgosu}; \
     mkdir /home/www-data; \
     chmod 711 /home/www-data; \
     chown www-data:www-data /home/www-data; \
@@ -34,8 +33,8 @@ ARG IMAGICK_BUILD_REQUIREMENTS="curl cmake gcc libtool libedit-dev liblcms2-dev 
 ARG IMAGICK_BUILD_REQUIREMENTS_EXTRA=""
 ARG IMAGICK_EXTRA_CONFIGURE_ARGS=""
 
-ARG MOZJPEG_VERSION="4.1.1"
 ARG MOZJPEG_EXTRA_CONFIGURE_ARGS=""
+ARG MOZJPEG_VERSION="4.1.1"
 
 ARG TIFF_VERSION="4.6.0"
 ARG TIFF_EXTRA_CONFIGURE_ARGS=""
