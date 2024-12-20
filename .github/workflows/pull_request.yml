@@ -8,7 +8,7 @@ jobs:
   lint:
     strategy:
       matrix:
-        version: [ 'buster', 'bullseye', 'bookworm' ]
+        version: [ 'bullseye', 'bookworm' ]
     runs-on: ubuntu-latest
     container: pipelinecomponents/hadolint:latest
     steps:

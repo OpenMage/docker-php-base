@@ -1,6 +1,6 @@
 # PHP Base Image (WIP)
 
-This Repo contains the build instructions for the PHP base image (Stretch and Buster). All PHP images should inherit from this image.
+This Repo contains the build instructions for the PHP base image (bullseye and bookworm). All PHP images should inherit from this image.
 
 ## Documentation
 
