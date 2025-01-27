@@ -10,12 +10,6 @@ RUN set -xe; \
     chown www-data:www-data /home/www-data; \
     usermod -d /home/www-data www-data; \
     \
-        ## block packages from being installed
-    	{ \
-    		echo 'Package: libjpeg*'; \
-    		echo 'Pin: release *'; \
-    		echo 'Pin-Priority: -1'; \
-    	} > /etc/apt/preferences.d/no-libjpeg; \
     	{ \
     		echo 'Package: libtiff*'; \
     		echo 'Pin: release *'; \
@@ -29,7 +23,7 @@ RUN set -xe; \
 
 ARG IMAGICK_RUNTIME_REQUIREMENTS="libpng16-16 liblcms2-2 libgomp1 libltdl7 bzip2 gosu brotli"
 ARG IMAGICK_RUNTIME_REQUIREMENTS_EXTRA=""
-ARG IMAGICK_BUILD_REQUIREMENTS="curl cmake gcc libtool libedit-dev liblcms2-dev build-essential autoconf automake pkg-config libpng-dev libltdl-dev nasm"
+ARG IMAGICK_BUILD_REQUIREMENTS="curl cmake gcc libtool libedit-dev liblcms2-dev build-essential autoconf automake pkg-config libpng-dev libjpeg-dev libltdl-dev nasm"
 ARG IMAGICK_BUILD_REQUIREMENTS_EXTRA=""
 ARG IMAGICK_EXTRA_CONFIGURE_ARGS=""
 
