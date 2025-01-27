@@ -93,9 +93,9 @@ RUN docker-package-download -o libwebp.tar.gz -s https://storage.googleapis.com/
 WORKDIR /tmp/openjpeg
 RUN docker-package-download -o openjpeg.tar.gz -s https://github.com/uclouvain/openjpeg/releases/download/v${OPENJPEG_VERSION}/openjpeg-v${OPENJPEG_VERSION}-linux-x86_64.tar.gz; \
     tar --strip 1 -xzf openjpeg.tar.gz; \
-    mkdir build; \
-    cd build; \
-    cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr; \
+    mkdir build;
+WORKDIR /tmp/openjpeg/build
+RUN cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr; \
     make -j"$(nproc)"; \
     make install; \
     make clean; \
@@ -121,4 +121,5 @@ RUN docker-package-download -o imagemagick.tar.gz -s https://github.com/Imagick/
             ; \
     make -j"$(nproc)"; \
     make install; \
+    make clean; \
     /usr/local/bin/docker-layer-clean
