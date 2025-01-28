@@ -23,7 +23,7 @@ RUN set -xe; \
 
 ARG IMAGICK_RUNTIME_REQUIREMENTS="libpng16-16 liblcms2-2 libgomp1 libltdl7 bzip2 gosu brotli"
 ARG IMAGICK_RUNTIME_REQUIREMENTS_EXTRA=""
-ARG IMAGICK_BUILD_REQUIREMENTS="curl cmake gcc libtool libedit-dev liblcms2-dev build-essential autoconf automake pkg-config libpng-dev libjpeg-dev libltdl-dev nasm"
+ARG IMAGICK_BUILD_REQUIREMENTS="curl cmake gcc libtool libedit-dev liblcms2-dev build-essential autoconf automake pkg-config libpng-dev libjpeg-dev libltdl-dev nasm libmagickwand-dev imagemagick"
 ARG IMAGICK_BUILD_REQUIREMENTS_EXTRA=""
 ARG IMAGICK_EXTRA_CONFIGURE_ARGS=""
 
@@ -96,23 +96,8 @@ RUN cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr; \
     ################################################
     ## install imagick
     ################################################
-    mkdir -p /tmp/imagemagick;
-WORKDIR /tmp/imagemagick
-RUN docker-package-download -o imagemagick.tar.gz -s https://github.com/Imagick/imagick/archive/refs/tags/${IMAGICK_VERSION}.tar.gz/; \
-    tar --strip 1 -xzf imagemagick.tar.gz; \
-    ./configure \
-            --prefix=/usr \
-            --with-webp \
-            --without-perl \
-            --without-x \
-            --without-xml \
-            --without-pango \
-            --without-jbig \
-            --without-wmf \
-            --with-perl=no \
-            --with-modules \
-            ${IMAGICK_EXTRA_CONFIGURE_ARGS:-} \
-            ; \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends imagemagick libmagickwand-dev; \
     make -j"$(nproc)"; \
     make install; \
     make clean; \
