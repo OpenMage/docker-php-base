@@ -23,7 +23,7 @@ RUN set -xe; \
 
 ARG IMAGICK_RUNTIME_REQUIREMENTS="libpng16-16 liblcms2-2 libgomp1 libltdl7 bzip2 gosu brotli"
 ARG IMAGICK_RUNTIME_REQUIREMENTS_EXTRA=""
-ARG IMAGICK_BUILD_REQUIREMENTS="curl cmake gcc libtool libedit-dev liblcms2-dev build-essential autoconf automake pkg-config libpng-dev libjpeg-dev libltdl-dev nasm libmagickwand-dev imagemagick"
+ARG IMAGICK_BUILD_REQUIREMENTS="curl cmake gcc libtool libedit-dev liblcms2-dev build-essential autoconf automake pkg-config libpng-dev libjpeg-dev libltdl-dev nasm"
 
 ARG MOZJPEG_VERSION="4.1.1"
 ARG MOZJPEG_EXTRA_CONFIGURE_ARGS=""
@@ -40,49 +40,24 @@ ARG IMAGICK_EXTRA_CONFIGURE_ARGS=""
 ARG OPENJPEG_VERSION="2.5.3"
 
 ## configure imagick and the dependencies
-# hadolint ignore=DL3008
 RUN set -xe; \
     \
     /usr/local/bin/docker-install-requirements imagick; \
-    ################################################
-    ## install mozjpeg
-    ################################################
-    mkdir -p /tmp/mozjpeg;
+    mkdir -p /tmp/mozjpeg; \
+    mkdir -p /tmp/tiff; \
+    mkdir -p /tmp/libwebp; \
+    mkdir -p /tmp/openjpeg;
+################################################
+## install mozjpeg
+################################################
 WORKDIR /tmp/mozjpeg
 RUN docker-package-download -o mozjpeg.tar.gz -s https://github.com/mozilla/mozjpeg/archive/refs/tags/v${MOZJPEG_VERSION}.tar.gz; \
     tar --strip 1 -xzf mozjpeg.tar.gz; \
     cmake -G"Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=/usr/lib -DWITH_JPEG8=true; \
-    make install prefix=/usr libdir=/usr/lib64 ; \
-    ################################################
-    ## install tiff
-    ################################################
-    mkdir -p /tmp/tiff;
-WORKDIR /tmp/tiff
-RUN docker-package-download -o tiff.tar.gz -s http://download.osgeo.org/libtiff/tiff-${TIFF_VERSION}.tar.gz; \
-    tar --strip 1 -xzf tiff.tar.gz; \
-    ./configure \
-            --prefix=/usr \
-            ${TIFF_EXTRA_CONFIGURE_ARGS:-} \
-            ; \
-    make -j"$(nproc)"; \
-    make install; \
-    ################################################
-    ## install webp
-    ################################################
-    mkdir -p /tmp/libwebp;
-WORKDIR /tmp/libwebp
-RUN docker-package-download -o libwebp.tar.gz -s https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-${WEBP_VERSION}.tar.gz; \
-    tar --strip 1 -xzf libwebp.tar.gz; \
-    ./configure \
-            --prefix=/usr \
-            ${WEBP_EXTRA_CONFIGURE_ARGS:-} \
-            ; \
-    make -j"$(nproc)"; \
-    make install; \
-    ################################################
-    ## install openjpeg
-    ################################################
-    mkdir -p /tmp/openjpeg;
+    make install prefix=/usr libdir=/usr/lib64;
+################################################
+## install openjpeg
+################################################
 WORKDIR /tmp/openjpeg
 RUN docker-package-download -o openjpeg.tar.gz -s https://github.com/uclouvain/openjpeg/releases/download/v${OPENJPEG_VERSION}/openjpeg-v${OPENJPEG_VERSION}-linux-x86_64.tar.gz; \
     tar --strip 1 -xzf openjpeg.tar.gz; \
@@ -92,12 +67,10 @@ RUN cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr; \
     make -j"$(nproc)"; \
     make install; \
     make clean; \
-    ################################################
-    ## install imagick
-    ################################################
+################################################
+## install imagick
+################################################
+# hadolint ignore=DL3008
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends imagemagick libmagickwand-dev; \
-    make -j"$(nproc)"; \
-    make install; \
-    make clean; \
+    apt-get install -y imagemagick libmagickwand-dev; \
     /usr/local/bin/docker-layer-clean
