@@ -24,8 +24,6 @@ RUN set -xe; \
 ARG IMAGICK_RUNTIME_REQUIREMENTS="libpng16-16 liblcms2-2 libgomp1 libltdl7 bzip2 gosu brotli"
 ARG IMAGICK_RUNTIME_REQUIREMENTS_EXTRA=""
 ARG IMAGICK_BUILD_REQUIREMENTS="curl cmake gcc libtool libedit-dev liblcms2-dev build-essential autoconf automake pkg-config libpng-dev libjpeg-dev libltdl-dev nasm libmagickwand-dev imagemagick"
-ARG IMAGICK_BUILD_REQUIREMENTS_EXTRA=""
-ARG IMAGICK_EXTRA_CONFIGURE_ARGS=""
 
 ARG MOZJPEG_VERSION="4.1.1"
 ARG MOZJPEG_EXTRA_CONFIGURE_ARGS=""
@@ -42,6 +40,7 @@ ARG IMAGICK_EXTRA_CONFIGURE_ARGS=""
 ARG OPENJPEG_VERSION="2.5.3"
 
 ## configure imagick and the dependencies
+# hadolint ignore=DL3008
 RUN set -xe; \
     \
     /usr/local/bin/docker-install-requirements imagick; \
